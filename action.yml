@@ -1,0 +1,46 @@
+name: "Pull Request Body Updater GitHub Action"
+description: "GitHub Action that updates a pull request body"
+author: "Devin Ford"
+runs:
+  using: "node16"
+  main: "dist/index.js"
+inputs:
+  repo-token:
+    description: "The GITHUB_TOKEN secret"
+    required: true
+  head-branch-regex:
+    description: "Regex to match text in the head branch name"
+    required: false
+    default: ""
+  lowercase-branch:
+    description: "Should lowercase branch name before matching text"
+    required: false
+    default: "true"
+  body-template:
+    description: "Body template where matched text from branch gets substituted in. Allowed tokens: %basebranch% | %headbranch%"
+    required: false
+    default: ""
+  body-update-action:
+    description: "Update action to perform on the body. Allowed values: prefix | suffix | replace"
+    required: false
+    default: "suffix"
+  body-newline-count:
+    description: "Number of newlines to separate body and its prefix or suffix"
+    required: false
+    default: "2"
+  body-uppercase-base-match:
+    description: "Should uppercase matched text from base branch in body"
+    required: false
+    default: "true"
+  body-uppercase-head-match:
+    description: "Should uppercase matched text from head branch in body"
+    required: false
+    default: "true"
+outputs:
+  headMatch:
+    description: "Matched text from head branch if any"
+  bodyUpdated:
+    description: "Whether the PR body was updated"
+branding:
+  icon: "edit"
+  color: "purple"
