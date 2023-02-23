@@ -1,5 +1,5 @@
 {
-  "name": "pr-update-body-action",
+  "name": "append_pr_comment",
   "version": "1.0.0",
   "description": "PR Body Update GitHub Action",
   "main": "index.js",
