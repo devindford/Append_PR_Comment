@@ -53,12 +53,10 @@ jobs:
     - uses: devindford/Append_PR_Comment@v1.1.2
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
-        head-branch-regex: 'foo-\d+'
         body-template: |
           This was added after the action ran
           Isn't this cool!
         body-update-action: 'suffix'
-        body-uppercase-base-match: false
 ```
 
 The PR body will now have the template language after the initial PR body message
