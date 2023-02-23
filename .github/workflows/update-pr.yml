@@ -13,7 +13,6 @@ jobs:
         uses: devindford/Append_PR_Comment@v1.1.2
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          head-branch-regex: '[a-z\d-_.\/]+'
           body-template: "Updated by PR action 👽"
   update_pr_outputs:
     runs-on: ubuntu-latest
