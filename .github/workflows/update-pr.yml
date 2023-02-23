@@ -1,0 +1,24 @@
+name: "Update Pull Request Body"
+
+on: pull_request
+
+jobs:
+  update_pr:
+    runs-on: ubuntu-latest
+    outputs:
+      headMatch: ${{ steps.update_pr.outputs.headMatch }}
+      bodyUpdated: ${{ steps.update_pr.outputs.bodyUpdated }}
+    steps:
+      - id: update_pr
+        uses: devindford/pr-update-body-action@v1.0.0
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          head-branch-regex: '[a-z\d-_.\/]+'
+          body-template: "Updated by PR action 👽"
+  update_pr_outputs:
+    runs-on: ubuntu-latest
+    needs: update_pr
+    steps:
+      - run: |
+          echo 'headMatch:' ${{needs.update_pr.outputs.headMatch}}
+          echo 'bodyUpdated:' ${{needs.update_pr.outputs.bodyUpdated}}

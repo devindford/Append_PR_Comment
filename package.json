@@ -1,0 +1,30 @@
+{
+  "name": "pr-update-body-action",
+  "version": "1.0.0",
+  "description": "PR Body Update GitHub Action",
+  "main": "index.js",
+  "scripts": {
+    "build": "ncc build index.js --out dist",
+    "lint": "eslint index.js",
+    "test": "eslint index.js && jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devindford/Append_PR_Comment.git"
+  },
+  "keywords": [
+    "GitHub",
+    "Actions",
+    "PullRequest"
+  ],
+  "author": "Devin Ford",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devindford/Append_PR_Comment/issues"
+  },
+  "homepage": "https://github.com/devindford/Append_PR_Comment/#readme",
+  "dependencies": {
+    "@actions/core": "^1.10.0",
+    "@actions/github": "^5.1.1"
+  }
+}
