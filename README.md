@@ -50,7 +50,7 @@ jobs:
   update_pr:
     runs-on: ubuntu-latest
     steps:
-    - uses: devindford/pr-update-body-action@v1.0.0
+    - uses: devindford/Append_PR_Comment@v1.0.0
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
         head-branch-regex: 'foo-\d+'
