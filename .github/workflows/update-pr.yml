@@ -10,7 +10,7 @@ jobs:
       bodyUpdated: ${{ steps.update_pr.outputs.bodyUpdated }}
     steps:
       - id: update_pr
-        uses: devindford/pr-update-body-action@v1.0.0
+        uses: devindford/Append_PR_Comment@v1.0.0
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           head-branch-regex: '[a-z\d-_.\/]+'
