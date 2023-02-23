@@ -1,6 +1,6 @@
 # Pull Request Updater
 
-This is a GitHub Action that updates a pull request body with a provided template. The pull request body can either be prefixed, suffixed or replaced.
+This is a GitHub Action that updates a pull request body with a provided template. The pull request body can either be prefixed or suffixed.
 
 Forked and modified from [pr-update-action](https://github.com/tzkhan/pr-update-action)
 
