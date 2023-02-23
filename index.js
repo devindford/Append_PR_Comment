@@ -54,23 +54,21 @@ async function run() {
     const upperCase = (upperCase, text) => upperCase ? text.toUpperCase() : text;
 
     const body = github.context.payload.pull_request?.body || '';
-    const processedBodyText = inputs.bodyTemplate
-      .replace(headTokenRegex, upperCase(inputs.bodyUppercaseHeadMatch, matches.headMatch));
-    core.info(`Processed body text: ${processedBodyText}`);
+    core.info( `Processed body text: ${ body }`);
 
     const updateBody = ({
-      prefix: !body.toLowerCase().startsWith(processedBodyText.toLowerCase()),
-      suffix: !body.toLowerCase().endsWith(processedBodyText.toLowerCase()),
-      replace: body.toLowerCase() !== processedBodyText.toLowerCase(),
+      prefix: !body.toLowerCase().startsWith(inputs.bodyTemplate.toLowerCase()),
+      suffix: !body.toLowerCase().endsWith(inputs.bodyTemplate.toLowerCase()),
+      replace: body.toLowerCase() !== inputs.bodyTemplate.toLowerCase(),
     })[inputs.bodyUpdateAction] || false;
 
     core.setOutput('bodyUpdated', updateBody.toString());
 
     if (updateBody) {
       request.body = ({
-        prefix: processedBodyText.concat('\n'.repeat(inputs.bodyNewlineCount), body),
-        suffix: body.concat('\n'.repeat(inputs.bodyNewlineCount), processedBodyText),
-        replace: processedBodyText,
+        prefix: inputs.bodyTemplate.concat('\n'.repeat(inputs.bodyNewlineCount), body),
+        suffix: body.concat('\n'.repeat(inputs.bodyNewlineCount), inputs.bodyTemplate),
+        replace: inputs.bodyTemplate,
       })[inputs.bodyUpdateAction];
       core.debug(`New body: ${request.body}`);
     } else {
@@ -84,6 +82,7 @@ async function run() {
     if (!updateBody) {
       return;
     }
+
     const octokit = github.getOctokit(inputs.token);
     const response = await octokit.rest.pulls.update(request);
 
