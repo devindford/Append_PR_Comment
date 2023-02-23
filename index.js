@@ -29,7 +29,7 @@ async function run() {
     }
 
     if (matchHeadBranch) {
-      const headBranchName = github.context.payload.pull_request.head.ref;
+      const headBranchName = github.context.payload.pull_request?.head.ref;
       const headBranch = inputs.lowercaseBranch ? headBranchName.toLowerCase() : headBranchName;
       core.info(`Head branch: ${headBranch}`);
 
@@ -48,12 +48,12 @@ async function run() {
     const request = {
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
-      pull_number: github.context.payload.pull_request.number,
+      pull_number: github.context.payload.pull_request?.number,
     }
 
     const upperCase = (upperCase, text) => upperCase ? text.toUpperCase() : text;
 
-    const body = github.context.payload.pull_request.body || '';
+    const body = github.context.payload.pull_request?.body || '';
     const processedBodyText = inputs.bodyTemplate
       .replace(headTokenRegex, upperCase(inputs.bodyUppercaseHeadMatch, matches.headMatch));
     core.info(`Processed body text: ${processedBodyText}`);
