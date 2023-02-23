@@ -1,5 +1,8 @@
 # Pull Request Updater
 
+![Update Pull Request](https://github.com/devindford/Append_PR_Comment/workflows/Update%20Pull%20Request/badge.svg)
+[![Release](https://img.shields.io/github/release/devindford/Append_PR_Comment.svg)](https://github.com/devindford/Append_PR_Comment/releases/latest)
+
 This is a GitHub Action that updates a pull request body with a provided template. The pull request body can either be prefixed or suffixed.
 
 Forked and modified from [pr-update-action](https://github.com/tzkhan/pr-update-action)
