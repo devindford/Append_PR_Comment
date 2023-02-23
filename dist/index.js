@@ -9826,7 +9826,6 @@ async function run() {
       repo: github.context.repo.repo,
       pull_number: github.context.payload.pull_request.number,
     }
-    core.debug( request )
 
     const upperCase = (upperCase, text) => upperCase ? text.toUpperCase() : text;
 
@@ -9854,6 +9853,10 @@ async function run() {
       core.warning('No updates were made to PR body');
     }
 
+    if (!request.pull_number) {
+      core.error('Unable to retrieve the pull request number')
+    }
+    
     if (!updateBody) {
       return;
     }
