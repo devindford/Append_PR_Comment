@@ -48,8 +48,9 @@ async function run() {
     const request = {
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
-      pull_number: github.context.payload.pull_request?.number,
+      pull_number: github.context.payload.pull_request.number,
     }
+    core.debug( request )
 
     const upperCase = (upperCase, text) => upperCase ? text.toUpperCase() : text;
 
@@ -80,7 +81,6 @@ async function run() {
     if (!updateBody) {
       return;
     }
-    core.debug(request)
     const octokit = github.getOctokit(inputs.token);
     const response = await octokit.rest.pulls.update(request);
 
