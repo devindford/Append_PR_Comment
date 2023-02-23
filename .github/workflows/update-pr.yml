@@ -19,5 +19,4 @@ jobs:
     needs: update_pr
     steps:
       - run: |
-          echo 'headMatch:' ${{needs.update_pr.outputs.headMatch}}
           echo 'bodyUpdated:' ${{needs.update_pr.outputs.bodyUpdated}}
