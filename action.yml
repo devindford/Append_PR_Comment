@@ -8,20 +8,12 @@ inputs:
   repo-token:
     description: "The GITHUB_TOKEN secret"
     required: true
-  head-branch-regex:
-    description: "Regex to match text in the head branch name"
-    required: false
-    default: ""
-  lowercase-branch:
-    description: "Should lowercase branch name before matching text"
-    required: false
-    default: "true"
   body-template:
-    description: "Body template where matched text from branch gets substituted in. Allowed tokens: %basebranch% | %headbranch%"
+    description: "Body template where the content gets added to the PR body"
     required: false
     default: ""
   body-update-action:
-    description: "Update action to perform on the body. Allowed values: prefix | suffix | replace"
+    description: "Update action to perform on the body. Allowed values: prefix | suffix"
     required: false
     default: "suffix"
   body-newline-count:
@@ -37,8 +29,6 @@ inputs:
     required: false
     default: "true"
 outputs:
-  headMatch:
-    description: "Matched text from head branch if any"
   bodyUpdated:
     description: "Whether the PR body was updated"
 branding:

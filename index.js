@@ -3,12 +3,9 @@ const github = require('@actions/github');
 
 async function run() {
   try {
-    const headTokenRegex = new RegExp('%headbranch%', "g");
 
     const inputs = {
       token: core.getInput('repo-token', {required: true}),
-      headBranchRegex: core.getInput('head-branch-regex'),
-      lowercaseBranch: (core.getInput('lowercase-branch').toLowerCase() === 'true'),
       bodyTemplate: core.getInput('body-template'),
       bodyUpdateAction: core.getInput('body-update-action').toLowerCase(),
       bodyNewlineCount: parseInt(core.getInput('body-newline-count')),
@@ -16,34 +13,6 @@ async function run() {
       bodyUppercaseHeadMatch: (core.getInput('body-uppercase-head-match').toLowerCase() === 'true'),
     }
 
-    const headBranchRegex = inputs.headBranchRegex.trim();
-    const matchHeadBranch = headBranchRegex.length > 0;
-
-    if (!matchHeadBranch) {
-      core.setFailed('No branch regex values have been specified');
-      return;
-    }
-
-    const matches = {
-      headMatch: ''
-    }
-
-    if (matchHeadBranch) {
-      const headBranchName = github.context.payload.pull_request?.head.ref;
-      const headBranch = inputs.lowercaseBranch ? headBranchName.toLowerCase() : headBranchName;
-      core.info(`Head branch: ${headBranch}`);
-
-      const headMatches = headBranch.match(new RegExp(headBranchRegex));
-      if (!headMatches) {
-        core.setFailed('Head branch name does not match given regex');
-        return;
-      }
-
-      matches.headMatch = headMatches[0];
-      core.info(`Matched head branch text: ${matches.headMatch}`);
-
-      core.setOutput('headMatch', matches.headMatch);
-    }
 
     const request = {
       owner: github.context.repo.owner,
@@ -58,8 +27,7 @@ async function run() {
 
     const updateBody = ({
       prefix: !body.toLowerCase().startsWith(inputs.bodyTemplate.toLowerCase()),
-      suffix: !body.toLowerCase().endsWith(inputs.bodyTemplate.toLowerCase()),
-      replace: body.toLowerCase() !== inputs.bodyTemplate.toLowerCase(),
+      suffix: !body.toLowerCase().endsWith(inputs.bodyTemplate.toLowerCase())
     })[inputs.bodyUpdateAction] || false;
 
     core.setOutput('bodyUpdated', updateBody.toString());
@@ -67,12 +35,11 @@ async function run() {
     if (updateBody) {
       request.body = ({
         prefix: inputs.bodyTemplate.concat('\n'.repeat(inputs.bodyNewlineCount), body),
-        suffix: body.concat('\n'.repeat(inputs.bodyNewlineCount), inputs.bodyTemplate),
-        replace: inputs.bodyTemplate,
+        suffix: body.concat('\n'.repeat(inputs.bodyNewlineCount), inputs.bodyTemplate)
       })[inputs.bodyUpdateAction];
       core.debug(`New body: ${request.body}`);
     } else {
-      core.warning('No updates were made to PR body');
+      core.warning('PR body already includes the template, no update made to the PR');
     }
 
     if (!request.pull_number) {
