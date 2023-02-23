@@ -80,7 +80,7 @@ async function run() {
     if (!updateBody) {
       return;
     }
-
+    core.debug(request)
     const octokit = github.getOctokit(inputs.token);
     const response = await octokit.rest.pulls.update(request);
 
