@@ -28,6 +28,9 @@ inputs:
     description: "Should uppercase matched text from head branch in body"
     required: false
     default: "true"
+  pull-number:
+    description: "Override for pull request number.  Defaults to current PR"
+    required: false
 outputs:
   bodyUpdated:
     description: "Whether the PR body was updated"
