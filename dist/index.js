@@ -9787,13 +9787,14 @@ async function run() {
       bodyNewlineCount: parseInt(core.getInput('body-newline-count')),
       bodyUppercaseBaseMatch: (core.getInput('body-uppercase-base-match').toLowerCase() === 'true'),
       bodyUppercaseHeadMatch: (core.getInput('body-uppercase-head-match').toLowerCase() === 'true'),
+      pullNumber: (parseInt(core.getInput('pull-number')),
     }
 
 
     const request = {
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
-      pull_number: github.context.payload.pull_request.number,
+      pull_number: inputs.pullNumber || github.context.payload.pull_request.number,
     }
 
     const upperCase = (upperCase, text) => upperCase ? text.toUpperCase() : text;
