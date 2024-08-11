@@ -9,17 +9,36 @@ on:
         type: string
 
 jobs:
+  get-mci-vars:
+    name: Get variables from mci-variables
+    runs-on: ubuntu-latest
+    outputs:
+      start_time: ${{ steps.automation.outputs.start_time }}
+    steps:
+      - id: automation
+        shell: bash
+        run: |
+          echo "start_time=$(date)" >> $GITHUB_OUTPUT
+          
   update_pr:
+    needs: get-mci-vars
     runs-on: ubuntu-latest
     outputs:
       headMatch: ${{ steps.update_pr.outputs.headMatch }}
       bodyUpdated: ${{ steps.update_pr.outputs.bodyUpdated }}
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
       - id: update_pr
         uses: rmcnamara/pr-update-action@context-parameters
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          body-template: "Updated by PR action 👽"
+          pull-request: ${{ inputs.pull-request }}
+          base-branch-regex: '.*'
+          body-template: |
+            - `Time Started: ${{ needs.get-mci-vars.outputs.start_time }}`
+          body-update-action: 'suffix'
           
   update_pr_outputs:
     runs-on: ubuntu-latest
