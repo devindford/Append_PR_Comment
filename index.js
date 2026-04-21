@@ -26,8 +26,8 @@ async function run() {
     core.info( `Processed body text: ${ body }`);
 
     const updateBody = ({
-      prefix: !body.toLowerCase().startsWith(inputs.bodyTemplate.toLowerCase()),
-      suffix: !body.toLowerCase().endsWith(inputs.bodyTemplate.toLowerCase())
+      prefix: !body.toLowerCase().includes(inputs.bodyTemplate.toLowerCase()),
+      suffix: !body.toLowerCase().includes(inputs.bodyTemplate.toLowerCase())
     })[inputs.bodyUpdateAction] || false;
 
     core.setOutput('bodyUpdated', updateBody.toString());
