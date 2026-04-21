@@ -2,7 +2,7 @@ name: "Pull Request Body Updater GitHub Action"
 description: "GitHub Action that updates a pull request body"
 author: "Devin Ford"
 runs:
-  using: "node16"
+  using: "node24"
   main: "dist/index.js"
 inputs:
   repo-token:
